@@ -134,19 +134,19 @@ async fn run(
         while rendezvous_client.get_shard(1).await.is_err() {
             time::sleep(Duration::from_secs(1)).await;
         }
-
-        println!("Triggering workers..");
-
-        semaphore.add_permits(workers);
-
-        let _permit = semaphore.acquire().await.unwrap();
-
-        println!("[{}] Broadcasting..", worker_index);
-
-        for index in 0..batches {
-            broker.broadcast(index).await;
-        }
-
-        println!("[{}] Broadcasting completed.", worker_index);
     }
+
+    println!("Triggering workers..");
+
+    semaphore.add_permits(workers);
+
+    let _permit = semaphore.acquire().await.unwrap();
+
+    println!("[{}] Broadcasting..", worker_index);
+
+    for index in 0..batches {
+        broker.broadcast(index).await;
+    }
+
+    println!("[{}] Broadcasting completed.", worker_index);
 }
