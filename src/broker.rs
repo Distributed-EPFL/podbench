@@ -153,4 +153,8 @@ async fn run(
     }
 
     println!("[{}] Broadcasting completed.", worker_index);
+
+    loop {
+        time::sleep(Duration::from_secs(1)).await;
+    }
 }
