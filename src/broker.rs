@@ -56,6 +56,10 @@ pub(crate) async fn broker(
             .await;
         });
     }
+
+    loop {
+        time::sleep(Duration::from_secs(1)).await;
+    }
 }
 
 async fn run(
