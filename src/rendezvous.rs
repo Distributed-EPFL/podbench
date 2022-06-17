@@ -9,11 +9,12 @@ use tokio::time;
 const ADDRESS: &str = "0.0.0.0:6000";
 
 pub(crate) async fn rendezvous(servers: usize, brokers: usize) {
-    println!("Booting rendezvous server..");
+    println!("Running as rendezvous:");
     println!("  Expected servers: {}", servers);
     println!("  Expected brokers: {}", brokers);
     println!();
 
+    println!("Booting rendezvous server..");
     let settings = RendezvousServerSettings {
         shard_sizes: vec![servers, brokers],
     };
