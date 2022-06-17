@@ -43,7 +43,7 @@ async fn main() {
         }
         "server" => {
             let servers = args.get_integer("servers") as usize;
-            let rendezvous = args.get_string("rendezvous");
+            let rendezvous = format!("{}:6000", args.get_string("rendezvous"));
             let index = args.get_integer("index") as usize;
             let loopback = args.get_bool("loopback");
 
@@ -51,7 +51,7 @@ async fn main() {
         }
         "broker" => {
             let servers = args.get_integer("servers") as usize;
-            let rendezvous = args.get_string("rendezvous");
+            let rendezvous = format!("{}:6000", args.get_string("rendezvous"));
             let index = args.get_integer("index") as usize;
             let workers = args.get_integer("workers") as usize;
             let batches = args.get_integer("batches") as usize;
