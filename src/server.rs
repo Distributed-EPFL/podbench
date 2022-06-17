@@ -8,6 +8,13 @@ use talk::{
 };
 
 pub(crate) async fn server(servers: usize, rendezvous: String, index: usize, loopback: bool) {
+    println!("Running as server:");
+    println!("  Expected servers: {}", servers);
+    println!("  Rendezvous IP: {}", rendezvous);
+    println!("  Server index: {}", index);
+    println!("  Use `LoopBack` instead of `HotStuff`: {}", loopback);
+    println!();
+
     println!("Loading assets..");
 
     let passepartout = Passepartout::load("/home/ubuntu/assets/passepartout.pod");
