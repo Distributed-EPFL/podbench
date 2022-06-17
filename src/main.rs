@@ -47,7 +47,7 @@ async fn main() {
             let index = args.get_integer("index") as usize;
             let loopback = args.get_bool("loopback");
 
-            server(servers, rendezvous.as_str(), index, loopback).await;
+            server(servers, rendezvous, index, loopback).await;
         }
         "broker" => {
             let servers = args.get_integer("servers") as usize;
@@ -56,7 +56,7 @@ async fn main() {
             let workers = args.get_integer("workers") as usize;
             let batches = args.get_integer("batches") as usize;
 
-            broker(servers, rendezvous.as_str(), index, workers, batches).await;
+            broker(servers, rendezvous, index, workers, batches).await;
         }
         _ => {
             println!("podbench error: argument #1 'role': must be either 'rendezvous', 'server' or 'broker'");
