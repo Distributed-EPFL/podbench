@@ -1,4 +1,4 @@
-use pod::{Directory, HotStuff, LoopBack, Membership, Passepartout, Server};
+use pod::{BftSmart, Directory, HotStuff, LoopBack, Membership, Passepartout, Server};
 
 use std::time::{Duration, Instant};
 
@@ -7,12 +7,12 @@ use talk::{
     net::SessionListener,
 };
 
-pub(crate) async fn server(servers: usize, rendezvous: String, index: usize, loopback: bool) {
+pub(crate) async fn server(servers: usize, rendezvous: String, index: usize, tobcast: String) {
     println!("Running as server:");
     println!("  Expected servers: {}", servers);
     println!("  Rendezvous IP: {}", rendezvous);
     println!("  Server index: {}", index);
-    println!("  Use `LoopBack` instead of `HotStuff`: {}", loopback);
+    println!("  Total Order Broadcast: {}", tobcast);
     println!();
 
     println!("Loading assets..");
@@ -34,10 +34,18 @@ pub(crate) async fn server(servers: usize, rendezvous: String, index: usize, loo
 
     let listener = SessionListener::new(listener);
 
-    let mut server = if loopback {
-        Server::new(keychain, membership, directory, LoopBack::new(), listener)
-    } else {
-        Server::new(
+    let mut server = match tobcast.as_str() {
+	"bftsmart" => Server::new(
+	    keychain,
+	    membership,
+	    directory,
+	    BftSmart::connect(index.try_into().expect("index too high"),
+			      &"127.0.0.1:7000".parse().unwrap())
+		.await
+		.unwrap(),
+	    listener,
+	),
+	"hotstuff" => Server::new(
             keychain,
             membership,
             directory,
@@ -45,7 +53,14 @@ pub(crate) async fn server(servers: usize, rendezvous: String, index: usize, loo
                 .await
                 .unwrap(),
             listener,
-        )
+        ),
+	"loopback" => Server::new(
+	    keychain,
+	    membership,
+	    directory,
+	    LoopBack::new(),
+	    listener),
+	_ => panic!("unknown Total Order Broadcast"),
     };
 
     println!("Announcing server..");

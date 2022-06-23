@@ -616,7 +616,7 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 [[package]]
 name = "pod"
 version = "0.1.0"
-source = "git+https://github.com/distributed-epfl/pod#f17f8de8fbb2a9355b122d8cfd74f472f904ddc9"
+source = "git+https://github.com/distributed-epfl/pod#b4d2daf43782ba02e5add85b170f1f3280e71fa6"
 dependencies = [
  "async-trait",
  "bincode",

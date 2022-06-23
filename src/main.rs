@@ -24,7 +24,7 @@ async fn main() {
           --index (integer) index of the server / broker
 
         Options for `server`:
-          --loopback use `LoopBack` broadcast instead of `HotStuff` (*)
+          --tobcast (string) total order broadcast to use (*)
 
         Required for `broker`:
           --workers (integer) number of workers per broker (*)
@@ -45,9 +45,9 @@ async fn main() {
             let servers = args.get_integer("servers") as usize;
             let rendezvous = format!("{}:6000", args.get_string("rendezvous"));
             let index = args.get_integer("index") as usize;
-            let loopback = args.get_bool("loopback");
+            let tobcast = args.get_string("tobcast");
 
-            server(servers, rendezvous, index, loopback).await;
+            server(servers, rendezvous, index, tobcast).await;
         }
         "broker" => {
             let servers = args.get_integer("servers") as usize;
